@@ -47,7 +47,7 @@ export const handler = async (
   const body = JSON.parse(event.body!);
   const messageEvent = body.events[0] as WebhookEvent;
 
-  if (messageEvent.type !== "message") {
+  if (!messageEvent || messageEvent.type !== "message") {
     // メッセージに関するイベント以外は無視する。
     return webhookResponse();
   }
@@ -68,6 +68,7 @@ export const handler = async (
   const stream = await client.getMessageContent(messageEvent.message.id);
   const buffer = await streamToBuffer(stream);
   const ImageInformation = await getImageInformation(buffer);
+  console.log(ImageInformation);
   const comment = await getImageComment(ImageInformation);
 
   await client.replyMessage(replyToken, {
