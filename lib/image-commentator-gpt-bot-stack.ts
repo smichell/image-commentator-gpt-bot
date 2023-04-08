@@ -15,7 +15,7 @@ export class ImageCommentatorGptBotStack extends cdk.Stack {
 
     // IAMロール
     const lambdaRole = new Role(this, "lambdaRole", {
-      roleName: "image-commentator-gpt-bot-lambda-role",
+      roleName: "bot-lambda-role",
       assumedBy: new ServicePrincipal("lambda.amazonaws.com"),
       managedPolicies: [
         ManagedPolicy.fromAwsManagedPolicyName(
