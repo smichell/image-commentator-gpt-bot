@@ -12,8 +12,8 @@ const botRoleContent = `
 ユーザーから送られた画像や写真について、以下の3種類をそれぞれ英語のテキストで伝えます。
 
 - ランドマーク
-- 写真に写り込んでいるもの
-- 写真から読み取れるもの
+- 画像に写り込んでいるもの
+- 画像から読み取れるもの
 
 この英語のテキストは複数ある場合はカンマで区切られます。もし存在しない場合は「なし」が設定されます。
 この英語のテキストを日本語に訳した上で感想や情報を組み立ててください。
@@ -31,12 +31,12 @@ export const getImageComment = async (
 - ランドマーク：${
     content.landmarks.length > 0 ? content.landmarks.join(",") : "なし"
   }
-- 写真に写り込んでいるもの：${
+- 画像に写り込んでいるもの：${
     content.localizedObjects.length > 0
       ? content.localizedObjects.join(",")
       : "なし"
   }
-- 写真から読み取れるもの：${
+- 画像から読み取れるもの：${
     content.labels.length > 0 ? content.labels.join(",") : "なし"
   }
 `;
@@ -50,6 +50,6 @@ export const getImageComment = async (
 
   return (
     response.data.choices[0].message?.content ??
-    "すみません、写真のことがよく分かりませんでした。"
+    "すみません、画像のことがよく分かりませんでした。"
   );
 };
