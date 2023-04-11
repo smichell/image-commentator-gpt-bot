@@ -1,14 +1,39 @@
-# Welcome to your CDK TypeScript project
+# Image Commentator GPT Bot
 
-This is a blank project for CDK development with TypeScript.
+Cloud Vision APIを使用して画像から抽出したランドマークやラベルをChatGPT APIに渡し、その画像に対してコメントをするLINEボットのサンプルです。
+以下のQiita記事のサンプル用に作成したプロジェクトで、CDKを使用してLambda関数を作成します。
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+[Cloud Vision API + ChatGPT APIを使用して画像にコメントするLINEボットを作る](https://qiita.com/smcl/items/f85745c1150c0bb3d96c)
 
-## Useful commands
+## 使い方
+詳しくはQiitaの記事に記載していますがデプロイまでの流れは以下です。
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+1. [LINE Developers](https://developers.line.biz/)でMessaging APIを使用するチャンネルを作成し、チャンネルシークレットとチャンネルアクセストークンを取得します。
+1. [Open API](https://openai.com/)でAPI keyを取得します。
+1. チャンネルシークレット、チャンネルアクセストークン、API keyを記載した `.env` ファイルをディレクトリのルートに作成します。
+    ```.env
+    CHANNEL_SECRET={チャンネルシークレット}
+    CHANNEL_ACCESS_TOKEN={チャンネルアクセストークン}
+    OPENAI_API_KEY={API key}
+    ```
+1. Docker Desktop を起動します。
+1. AWS CLIをセットアップしていない場合、以下のコマンドでセットアップします。
+    ```
+    $ aws configure
+    ```
+1. [Google Cloud](https://cloud.google.com/)でCloud Vision APIの利用を許可したWorkload Identityプールと、AWS用のWorkload Identityプロバイダを作成し、JSON形式の構成ファイルをダウンロードします。
+1. ダウンロードした構成ファイルは `.credentials/workloadIdentityCredentials.json` に置きます。
+1. CDKツールキットをインストールします。
+1. 以下のコマンドでAWSにデプロイします。
+    ```
+    $ yarn install
+    $ cdk deploy
+    ```
+1. デプロイ後に表示されるURLをLINEチャンネルのWebhookに登録します。
+1. LINEチャンネルを友だち登録し、画像を送信するとその画像に対するコメントが返ります。
+
+## ライセンス
+MIT License
+
+## 参考
+[Cloud Vision API + ChatGPT APIを使用して画像にコメントするLINEボットを作る](https://qiita.com/smcl/items/f85745c1150c0bb3d96c)
